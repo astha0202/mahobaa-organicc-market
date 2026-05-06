@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Shop Products</h2>
+
+<div class="product-grid">
+{% for p in products %}
+<div class="card">
+
+<img src="{{ p.image }}" width="120">
+
+<h3>{{ p.name }}</h3>
+<p>₹{{ p.price }}</p>
+
+{% if p.shop_name == "Kisan Jaivik Utpadak Sangathan" %}
+<p style="color:green;">✔ 100% Organic</p>
+{% endif %}
+
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

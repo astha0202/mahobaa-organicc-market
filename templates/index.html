@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="hero">
+  <div>
+    <h1>Fresh • Organic • Local</h1>
+    <p>Compare prices across shops and buy the best quality groceries.</p>
+    <a href="/shops" class="btn">Browse Shops</a>
+
+    <form action="/search" class="search-box">
+      <input type="text" name="q" data-key="search_placeholder" placeholder="Search groceries...">
+      <button type="submit" data-key="search_btn">Search</button>
+    </form>
+
+    <div class="categories">
+      <a class="pill" href="/category/dal">Dal</a>
+      <a class="pill" href="/category/fruits">Fruits</a>
+      <a class="pill" href="/category/vegetables">Vegetables</a>
+    </div>
+  </div>
+  <img src="{{ url_for('static', filename='images/qr.png') }}" style="width:180px;border-radius:12px;">
+</div>
+
+<div class="section">
+  <h3>Featured Shops</h3>
+  <div class="grid">
+    {% for s in featured_shops %}
+    <div class="card shop-card">
+      <div class="shop-avatar">{{ s['name'][0] }}</div>
+      <div style="flex:1">
+        <div class="title">{{ s['name'] }}</div>
+        <div class="meta">Trusted local seller</div>
+        <a class="btn" href="/shop/{{ s['id'] }}">View</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<h3>Popular Shops</h3>
+
+<div class="product-grid">
+{% for shop in shops %}
+<div class="card">
+    <h4>{{ shop['name'] }}</h4>
+    <a href="/shop/{{ shop['id'] }}">
+        <button>Visit</button>
+    </a>
+</div>
+{% endfor %}
+</div>
+<form action="/filter">
+    <input type="number" name="min" placeholder="Min Price">
+    <input type="number" name="max" placeholder="Max Price">
+    <button>Filter</button>
+</form>
+<a href="/sort"><button>Sort Low → High</button></a>
+{% endblock %}
