@@ -1,54 +1,96 @@
-const translations = {
-    en: {
-        title: "Mahoba Organic Market",
-        shops: "Shops",
-        cart: "Cart",
-        search: "Search",
-        search_placeholder: "Search products...",
-        products: "Products",
-        add_to_cart: "Add to Cart",
-        featured: "Featured",
-        organic: "100% Organic",
-        payment: "Payment",
-        total: "Total",
-        proceed: "Proceed to Payment"
-    },
-    hi: {
-        title: "महोबा जैविक बाजार",
-        shops: "दुकानें",
-        cart: "कार्ट",
-        search: "खोजें",
-        search_placeholder: "उत्पाद खोजें...",
-        products: "उत्पाद",
-        add_to_cart: "कार्ट में डालें",
-        featured: "विशेष",
-        organic: "100% जैविक",
-        payment: "भुगतान",
-        total: "कुल",
-        proceed: "भुगतान करें"
-    }
-};
+function setLanguage(lang){
 
-function setLanguage(lang) {
     localStorage.setItem("lang", lang);
-    applyLanguage();
+
+    updateLanguage();
 }
 
-function applyLanguage() {
-    const lang = localStorage.getItem("lang") || "en";
+function updateLanguage(){
 
-    document.querySelectorAll("[data-key]").forEach(el => {
-        const key = el.getAttribute("data-key");
+    let lang = localStorage.getItem("lang") || "en";
 
-        if (translations[lang][key]) {
-            if (el.tagName === "INPUT") {
-                el.placeholder = translations[lang][key];
-            } else {
-                el.innerText = translations[lang][key];
-            }
+    // UI TRANSLATIONS
+    const translations = {
+
+        en:{
+            title:"🌿 Mahoba Organic Market",
+            cart:"Cart",
+            shops:"Shops",
+            addtocart:"Add to Cart",
+            buynow:"Buy Now",
+            payment:"Payment",
+            search:"Search",
+            browse:"Browse Shops",
+            products:"Products",
+            allshops:"All Shops",
+            shopproducts:"Shop Products",
+
+            view:"View",
+            visit:"Visit",
+            filter:"Filter",
+            sort:"Sort Low → High",
+
+            heroheading:"Fresh • Organic • Local",
+
+            herotext:"Compare prices across shops and buy the best quality groceries.",
+
+            featuredshops:"Featured Shops",
+
+            popularshops:"Popular Shops",
+
+            seller:"Trusted local seller"
+        },
+
+        hi:{
+            title:"🌿 महोबा ऑर्गेनिक मार्केट",
+            cart:"कार्ट",
+            shops:"दुकानें",
+            addtocart:"कार्ट में जोड़ें",
+            buynow:"अभी खरीदें",
+            payment:"भुगतान",
+            search:"खोजें",
+            browse:"दुकान देखें",
+            products:"उत्पाद",
+            allshops:"सभी दुकानें",
+            shopproducts:"दुकान के उत्पाद",
+
+            view:"देखें",
+            visit:"जाएँ",
+            filter:"फ़िल्टर",
+            sort:"कम कीमत → अधिक कीमत",
+
+            heroheading:"ताज़ा • ऑर्गेनिक • स्थानीय",
+
+            herotext:"दुकानों के बीच कीमतों की तुलना करें और सर्वोत्तम गुणवत्ता का सामान खरीदें।",
+
+            featuredshops:"विशेष दुकानें",
+
+            popularshops:"लोकप्रिय दुकानें",
+
+            seller:"विश्वसनीय स्थानीय विक्रेता"
+        }
+    };
+
+    // CHANGE UI TEXT
+    document.querySelectorAll("[data-key]").forEach(el=>{
+
+        let key = el.getAttribute("data-key");
+
+        if(translations[lang][key]){
+            el.innerText = translations[lang][key];
+        }
+    });
+
+    // CHANGE PRODUCT NAMES
+    document.querySelectorAll(".product-name").forEach(el=>{
+
+        if(lang === "hi"){
+            el.innerText = el.dataset.hi;
+        }
+        else{
+            el.innerText = el.dataset.en;
         }
     });
 }
 
-window.setLanguage = setLanguage;
-document.addEventListener("DOMContentLoaded", applyLanguage);
+window.onload = updateLanguage;
